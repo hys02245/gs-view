@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { defaultModel, ModelConfig, availableModels } from './config/models';
 import ModelSelector from './components/ModelSelector';
+import { Map } from 'lucide-react';
 
 const GaussianSplatViewer = dynamic(
   () => import('./components/GaussianSplatViewer'),
@@ -35,9 +37,19 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-2 sm:p-4 bg-gray-900">
       <div className="w-full max-w-6xl">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-4 sm:mb-6 md:mb-8">
-          41號碼頭倉儲貨物模擬GS
-        </h1>
+        <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center flex-1">
+            41號碼頭倉儲貨物模擬GS
+          </h1>
+          <Link
+            href="/map"
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 flex items-center gap-2 transition-colors duration-200 shadow-lg hover:shadow-xl"
+            title="Open Virtual Map View"
+          >
+            <Map className="w-5 h-5" />
+            <span className="hidden sm:inline">Map View</span>
+          </Link>
+        </div>
         
         <div className="w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] bg-black rounded-lg overflow-hidden shadow-2xl relative">
           <ModelSelector

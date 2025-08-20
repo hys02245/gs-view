@@ -1,0 +1,41 @@
+services:
+  gs-view:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gs-view-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    # Volumes commented out due to macOS external drive issues
+    # Uncomment if running on a different system:
+    # volumes:
+    #   - ./public/models:/app/public/models:ro
+    #   - ./data:/app/data:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => {r.statusCode === 200 ? process.exit(0) : process.exit(1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Development configuration (optional - uncomment to use)
+  # gs-view-dev:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.dev
+  #   container_name: gs-view-dev
+  #   ports:
+  #     - "3001:3000"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - NEXT_TELEMETRY_DISABLED=1
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #     - /app/.next
+  #   command: npm run dev
+  #   restart: unless-stopped

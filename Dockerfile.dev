@@ -1,0 +1,20 @@
+# Development Dockerfile for hot-reloading
+FROM node:20-alpine
+
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+# Install bun globally for development
+RUN npm install -g bun
+
+# Copy all application files
+COPY . .
+
+# Install dependencies
+RUN bun install
+
+# Expose port
+EXPOSE 3000
+
+# Start development server
+CMD ["bun", "run", "dev"]
