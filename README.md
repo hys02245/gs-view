@@ -60,6 +60,24 @@ cp .env.example .env.local
    bun run dev
    ```
 
+### Viewing External PLY Paths (outside the repo)
+
+If your PLY files live outside the repo (local path or mounted NAS), use the `/view` page with the `path` query.
+
+1. **Allow external roots**: Edit `.env.local` to list allowed root directories (comma-separated).
+   ```env
+   GS_PLY_ROOTS=/data/ply,/mnt/nas/ply
+   ```
+
+2. **Open the viewer URL**:
+   ```
+   http://localhost:3000/view?path=/data/ply/your-model.ply
+   ```
+
+Notes:
+- Only absolute paths ending with `.ply` are supported.
+- Requests are restricted to the roots listed in `GS_PLY_ROOTS`.
+
 ### Development Commands
 
 ```bash
