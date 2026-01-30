@@ -10,23 +10,6 @@ A demo application for viewing Gaussian Splats 3D data using [GaussianSplats3D](
 - **[TypeScript](https://www.typescriptlang.org/)** - JavaScript with syntax for types
 - **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
 
-## To-Do List
-
-### High Priority
-- [x] Set up Next.js project with TypeScript
-- [x] Install and configure GaussianSplats3D library
-- [x] Create 3D viewer component with Three.js integration
-- [x] Implement PLY file loader for storeroom.ply data
-
-### Medium Priority
-- [x] Add camera controls (orbit, zoom, pan)
-- [x] Create UI controls for viewer settings (quality, render mode)
-- [x] Implement loading state and progress indicator
-
-### Low Priority
-- [x] Add responsive design for mobile/desktop viewing
-- [x] Optimize performance for smooth rendering
-- [x] Add export/screenshot functionality
 
 ## Getting Started
 
@@ -88,3 +71,28 @@ bun run lint      # Run ESLint
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Docker / Kubernetes
+
+This project is configured for a production Docker image using Next.js standalone output.
+
+### Build & Run (Docker)
+
+```bash
+docker build -t gs-view .
+docker run --rm -p 3000:3000 \
+  -e GS_PLY_ROOTS=/data/ply \
+  -v /your/ply/folder:/data/ply \
+  gs-view
+```
+
+Open:
+```
+http://localhost:3000/view?path=/data/ply/your-model.ply
+```
+
+### Kubernetes Notes
+
+- Mount your PLY storage (NAS / NFS / hostPath) into the container.
+- Set `GS_PLY_ROOTS` to the mounted root(s).
+- The container listens on port `3000`.

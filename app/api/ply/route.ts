@@ -1,6 +1,7 @@
 import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import path from 'node:path';
+import { Readable } from 'node:stream';
 
 export const runtime = 'nodejs';
 
@@ -56,7 +57,7 @@ export async function GET(request: Request) {
     return Response.json({ error: 'Path is not a file.' }, { status: 400 });
   }
 
-  const stream = createReadStream(resolvedPath);
+  const stream = Readable.toWeb(createReadStream(resolvedPath)) as unknown as BodyInit;
 
   return new Response(stream, {
     headers: {
