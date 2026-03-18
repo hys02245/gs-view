@@ -103,7 +103,8 @@ export default function GaussianSplatViewer({ modelUrl, className = '', showCont
           showLoadingUI: false,
           splatAlphaRemovalThreshold: 10,
           position: [0, 0, 0],
-          rotation: [0, 0, 0, 1],
+          // Rotate the loaded model -90 degrees around the X axis to match source coordinates.
+          rotation: [-0.70710678, 0, 0, 0.70710678],
           scale: [1, 1, 1],
           onProgress: (progressValue: number) => {
             if (mounted && !isDisposed) {
